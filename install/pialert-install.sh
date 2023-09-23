@@ -53,7 +53,7 @@ $STD pip3 install cryptography
 msg_ok "Installed Python Dependencies"
 
 msg_info "Installing Pi.Alert (Patience)"
-git clone -q https://github.com/leiweibau/Pi.Alert.git /opt/pialert
+git clone -q https://github.com/tteck/Pi-Alert.git /opt/pialert
 rm -rf /var/lib/ieee-data /var/www/html/index.html
 mkdir -p /opt/pialert/front/reports
 mv /var/www/html/index.lighttpd.html /var/www/html/index.lighttpd.html.old
