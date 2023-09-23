@@ -52,7 +52,7 @@ $STD pip3 install fritzconnection
 $STD pip3 install cryptography
 msg_ok "Installed Python Dependencies"
 
-msg_info "Installing Pi.Alert (Patience)"
+msg_info "Installing Pi-Alert-LXC (Patience)"
 git clone -q https://github.com/tteck/Pi-Alert.git /opt/pialert
 rm -rf /var/lib/ieee-data /var/www/html/index.html
 mkdir -p /opt/pialert/front/reports
@@ -75,13 +75,13 @@ echo "/opt/pialert/back/pialert-cli set_permissions --lxc" >/usr/bin/permissions
 chmod +x /usr/bin/permissions
 echo "/opt/pialert/back/pialert-cli set_sudoers --lxc" >/usr/bin/sudoers
 chmod +x /usr/bin/sudoers
-msg_ok "Installed Pi.Alert"
+msg_ok "Installed Pi-Alert-LXC"
 
-msg_info "Start Pi.Alert Scan (Patience)"
+msg_info "Start Pi-Alert Scan (Patience)"
 $STD python3 /opt/pialert/back/pialert.py update_vendors
 $STD python3 /opt/pialert/back/pialert.py internet_IP
 $STD python3 /opt/pialert/back/pialert.py 1
-msg_ok "Finished Pi.Alert Scan"
+msg_ok "Finished Pi-Alert Scan"
 
 motd_ssh
 customize
