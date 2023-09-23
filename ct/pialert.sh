@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="PiAlert"
+APP="Pi-Alert-LXC"
 var_disk="3"
 var_cpu="1"
 var_ram="512"
