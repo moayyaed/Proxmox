@@ -18,6 +18,7 @@ $STD apt-get -y install \
   sudo \
   mc \
   curl \
+  git \
   apt-utils \
   lighttpd \
   sqlite3 \
@@ -28,7 +29,6 @@ $STD apt-get -y install \
   libwww-perl \
   nmap \
   zip \
-  aria2 \
   wakeonlan
 msg_ok "Installed Dependencies"
 
@@ -52,10 +52,10 @@ $STD pip3 install fritzconnection
 $STD pip3 install cryptography
 msg_ok "Installed Python Dependencies"
 
-msg_info "Installing Pi.Alert"
-curl -sL https://github.com/leiweibau/Pi.Alert/raw/main/tar/pialert_latest.tar | tar xvf - -C /opt >/dev/null 2>&1
+msg_info "Installing Pi.Alert (Patience)"
+git clone -q https://github.com/leiweibau/Pi.Alert.git /opt/pialert
 rm -rf /var/lib/ieee-data /var/www/html/index.html
-sed -i -e 's#^sudo cp -n /usr/share/ieee-data/.* /var/lib/ieee-data/#\# &#' -e '/^sudo mkdir -p 2_backup$/s/^/# /' -e '/^sudo cp \*.txt 2_backup$/s/^/# /' -e '/^sudo cp \*.csv 2_backup$/s/^/# /' /opt/pialert/back/update_vendors.sh
+mkdir -p /opt/pialert/front/reports
 mv /var/www/html/index.lighttpd.html /var/www/html/index.lighttpd.html.old
 ln -s /usr/share/ieee-data/ /var/lib/
 ln -s /opt/pialert/install/index.html /var/www/html/index.html
@@ -69,11 +69,6 @@ dest_dir="/opt/pialert/front/php/server"
 for file in pialert.vendors.log pialert.IP.log pialert.1.log pialert.cleanup.log pialert.webservices.log; do
     ln -s "$src_dir/$file" "$dest_dir/$file"
 done
-sed -i 's#PIALERT_PATH\s*=\s*'\''/home/pi/pialert'\''#PIALERT_PATH           = '\''/opt/pialert'\''#' /opt/pialert/config/pialert.conf
-sed -i 's/$HOME/\/opt/g' /opt/pialert/install/pialert.cron
-crontab /opt/pialert/install/pialert.cron
-echo "bash -c \"\$(wget -qLO - https://github.com/leiweibau/Pi.Alert/raw/main/install/pialert_update.sh)\" -s --lxc" >/usr/bin/update
-chmod +x /usr/bin/update
 echo "python3 /opt/pialert/back/pialert.py 1" >/usr/bin/scan
 chmod +x /usr/bin/scan
 echo "/opt/pialert/back/pialert-cli set_permissions --lxc" >/usr/bin/permissions
