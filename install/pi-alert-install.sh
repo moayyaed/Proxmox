@@ -69,6 +69,7 @@ dest_dir="/opt/pialert/front/php/server"
 for file in pialert.vendors.log pialert.IP.log pialert.1.log pialert.cleanup.log pialert.webservices.log; do
     ln -s "$src_dir/$file" "$dest_dir/$file"
 done
+crontab /opt/pialert/install/pialert.cron
 echo "python3 /opt/pialert/back/pialert.py 1" >/usr/bin/scan
 chmod +x /usr/bin/scan
 echo "/opt/pialert/back/pialert-cli set_permissions --lxc" >/usr/bin/permissions
